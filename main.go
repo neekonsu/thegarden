@@ -3,18 +3,18 @@ package main
 import (
 	"fmt"
 	"log"
-	"os"
 	"net/http"
+	"os"
 )
 
 type Page struct {
-	Title 	string
-	body	[]byte
+	Title string
+	Body  []byte
 }
 
 func (p *Page) savePage() error {
 	filename := p.Title + ".txt"
-	return os.WriteFile(filename, p.body, 0600)
+	return os.WriteFile(filename, p.Body, 0600)
 }
 
 func loadPage(title string) (*Page, error) {
@@ -24,12 +24,13 @@ func loadPage(title string) (*Page, error) {
 		return nil, err
 	}
 	return &Page{Title: title, Body: body}, nil
+}
 
 func handler(w http.ResponseWriter, r *http.Request) {
-    fmt.Fprintf(w, "Hi there, I love %s!", r.URL.Path[1:])
+	fmt.Fprintf(w, "Hi there, I love %s!", r.URL.Path[1:])
 }
 
 func main() {
-    http.HandleFunc("/", handler)
-    log.Fatal(http.ListenAndServe(":8080", nil))
+	http.HandleFunc("/", handler)
+	log.Fatal(http.ListenAndServe(":8080", nil))
 }

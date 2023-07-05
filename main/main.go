@@ -11,6 +11,13 @@ type Page struct {
 	Body  []byte
 }
 
+func load(title string) (*Page, error) {
+	
+	var p *Page = &Page{title, nil}
+
+	return p, nil
+}
+
 func handler(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, "Hi there, I love %s!", r.URL.Path[1:])
 }
